@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Exam project Summer 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "exam"
+  ],
+  "author": "Thorbjørn",
+  "license": "ISC"
+}
