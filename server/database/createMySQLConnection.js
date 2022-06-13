@@ -1,3 +1,5 @@
+import dotenv from "dotenv"
+dotenv.config({path: "../.env"});
 import mysql from "mysql"
 
 const connection = mysql.createConnection({
@@ -6,6 +8,8 @@ const connection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 })
+   
+
 connection.connect();
 
 console.log(connection);

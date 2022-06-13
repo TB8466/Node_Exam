@@ -13,12 +13,13 @@ db.query(`
     )
 `)
 db.query(`
-    DROP TABLE IF EXISTS flowers;
+    DROP TABLE IF EXISTS catalog;
 `)
 db.query(`
-    CREATE TABLE flowers(
+    CREATE TABLE catalog(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(50),
+        desciption VARCHAR(200),
         amount INT
     )
 `)
