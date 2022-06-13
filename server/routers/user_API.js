@@ -1,15 +1,11 @@
 import { Router } from "express";
 import session from "express-session";
 import db from "../database/createMySQLConnection.js";
-import passwordHandler from "../security/passwordHandler.js";
+import passwordHandler from "../security/passwordHandler.js"
 
 const router = Router();
 
-router.get("/", (req, res) => {
-    db.connect();
-});
-
-/* router.use(session({
+router.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
@@ -70,7 +66,7 @@ router.get("/profile", (req,res) =>{
     else{
         res.send({msg: "Go away"})
     }
-}); */
+});
 
 
 export default router;
