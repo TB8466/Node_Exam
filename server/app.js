@@ -1,22 +1,20 @@
 import express from "express";
 import path from "path";
-import userAPI from "./routers/user_API.js"
+import userAPI from "./routers/user_API.js";
+import catalogAPI from "./routers/catalog_API.js";
 import cors from "cors";
 import http from "http";
-import bodyParser from "body-parser";
 
-//import dotenv from "dotenv"
 
 const app = express();
 
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
 const server = http.createServer(app);
-//dotenv.config();
 
 app.use(userAPI);
+app.use(catalogAPI);
 app.use(express.static(path.resolve('../client/public')));
 
 

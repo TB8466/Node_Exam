@@ -19,7 +19,7 @@ db.query(`
     CREATE TABLE catalog(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(50),
-        desciption VARCHAR(200),
+        description VARCHAR(200),
         amount INT
     )
 `)
