@@ -1,0 +1,158 @@
+<script>
+    import Footer from "../components/footer.svelte";
+    import Header from "../components/header.svelte";
+    import io from "socket.io-client";
+
+    let overlay;
+
+    let email;
+    let username;
+    let password;
+
+    let newEmail;
+    let newUsername;
+    let newPassword;
+    let result = null;
+
+    const socket = io();
+
+
+    function login(name){
+        socket.emit("loggedIn", {username : name})
+    }
+
+
+    async function signIn(){
+        const res = await fetch("http://localhost:3000/api/user/login", {
+			method: 'POST',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+			body: JSON.stringify({
+				username,
+				password
+			})
+		})
+		result = await res.json();        
+
+        if(result){
+            console.log(username);
+            
+            
+            alert("Login success");
+        }
+        if(!result){
+            alert("Wrong username/password");
+        }
+        if(result.Result == 404){
+            alert("User not found");
+        }
+	};
+
+    function createUserOverlay(){
+        body.setAttribute("class","blur");
+        overlay.classList.remove("hidden")
+    }
+    function hideOverlay(){
+        body.classList.remove("blur");
+        overlay.classList.add("hidden");
+    }
+
+    async function createUser(){
+        const res = await fetch("http://localhost:3000/api/user", {
+			method: 'POST',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+			body: JSON.stringify({
+                newEmail,
+				newUsername,
+				newPassword
+			})
+		});
+		const json = await res.json()
+		result = JSON.stringify(json)
+        console.log(result);
+
+        alert("User created")
+        hideOverlay();
+    }
+
+
+
+    
+
+    let tæst;
+
+    socket.on("thisTest", ({ data, test}) => {
+        tæst = data;
+    })
+
+    function thisTest(event){
+        socket.emit("testThis",{data:event.target.value})
+    }
+</script>
+
+<main>
+    <Header></Header>
+    <h1>Login Screen:</h1>
+    <h2>Test: {tæst}</h2>
+        <input on:input={thisTest} type="text">
+
+        <div id="login">
+            <h1>Login</h1>
+            <label for="username">Username:</label>
+            <input required id="username" type="text" bind:value={username}>
+            <label for="password">Password:</label>
+            <input required id="password" type="password" bind:value={password}>
+            <button type="button" on:click={signIn}>Sign-in</button>
+            <button on:click={createUserOverlay}>No account? Click here to create new account</button>
+        </div>
+        <button on:click={()=>login(username)}>Pls work</button>
+
+        <div bind:this={overlay} class="hidden">
+            <div id="create-user">
+                <span class="close" on:click={hideOverlay}>&times</span>
+                <h1>Create new user:</h1>
+                <label for="crt-email">Email:</label>
+                <input required id="crt-email" type="email" bind:value={newEmail}>
+                <label for="crt-username">Username:</label>
+                <input required id="crt-username" type="text" bind:value={newUsername}>
+                <label for="crt-password">Password:</label>
+                <input required id="crt-password" type="password" bind:value={newPassword}>
+                <button type="button" on:click={createUser}>Create</button>
+            </div>
+        </div>
+    <Footer></Footer>
+</main>
+
+<style>
+   :global(.blur){
+            transition: 0.7s;
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+        }
+        .hidden{
+            display: none;
+            
+        }
+        #create-user{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: solid black;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        .close {
+            color: gray;
+            float: right;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .close:hover,.close:focus {
+            color: black;
+            cursor: pointer;
+        }
+</style>

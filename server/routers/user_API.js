@@ -5,18 +5,13 @@ import passwordHandler from "../security/passwordHandler.js"
 
 const router = Router();
 
-router.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-  }))
-
 router.get("/api/user", (req, res) => {
-    db.query("SELECT * FROM users", (error, result) =>{
+
+    res.send({data : req.session.username})
+    /* db.query("SELECT * FROM users", (error, result) =>{
         if (error) throw error;
         res.send(result);
-    });
+    }); */
 });
 
 router.post("/api/user", async (req, res) => {
@@ -43,8 +38,9 @@ router.post("/api/user/login", async (req, res) => {
             async (error, result) =>{
                 if(error)throw error;
                 if(await passwordHandler.decrypt(req.body.password,String(result[0].password))){
-                    res.send(true);
                     req.session.username = req.body.username;
+                    console.log(req.session.username);
+                    res.send(true);
                 }
                 else{
                     res.send(false);
