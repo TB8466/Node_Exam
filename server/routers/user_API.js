@@ -1,18 +1,19 @@
 import { Router } from "express";
-import session from "express-session";
 import db from "../database/createMySQLConnection.js";
 import passwordHandler from "../security/passwordHandler.js"
 
 const router = Router();
 
 router.get("/api/user", (req, res) => {
+    res.send({ data: req.session.username });
+});
+/* router.get("/api/user", (req, res) => {
 
-    res.send({data : req.session.username})
-    /* db.query("SELECT * FROM users", (error, result) =>{
+    db.query("SELECT * FROM users", (error, result) =>{
         if (error) throw error;
         res.send(result);
-    }); */
-});
+    });
+}); */
 
 router.post("/api/user", async (req, res) => {
     const VALUES = [
@@ -39,7 +40,7 @@ router.post("/api/user/login", async (req, res) => {
                 if(error)throw error;
                 if(await passwordHandler.decrypt(req.body.password,String(result[0].password))){
                     req.session.username = req.body.username;
-                    console.log(req.session.username);
+                    console.log("From post",req.session.username);
                     res.send(true);
                 }
                 else{

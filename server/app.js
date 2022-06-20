@@ -7,7 +7,11 @@ import http from "http";
 import { Server } from "socket.io";
 import session from "express-session";
 
+
 const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
@@ -15,15 +19,10 @@ const sessionMiddleware = session({
   saveUninitialized: true
 });
 
-app.use(cors());
-app.use(express.json());
-
-
-
-app.use(sessionMiddleware);
 app.use(express.static(path.resolve('../client/public')));
-app.use(userAPI);
-app.use(catalogAPI);
+app.use(sessionMiddleware);
+
+
 
 const server = http.createServer(app);
 
@@ -39,18 +38,38 @@ io.on("connection", (socket) => {
   });
 });
 
+
 io.on("connection", (socket) => {
-  socket.on("loggedIn", ({ data }) => {
-    
-    const username = socket.request.session.username;
-    console.log("The session username is:",username);
-    io.emit("login", { username });
+  const cart = {
+    itemId : "",
+    amount : 0
+  }
+  const wares = [];
+  socket.on("cartUpdated", ({ id, amount }) => {
+    if(wares[0].itemId === id){
+      console.log("if activated");
+      wares.findIndex(id).amount + 1;
+    }
+    else{
+    cart.itemId = id;
+    cart.amount = amount;
+    wares.push(cart);
+    }
+    console.log(wares);
+    console.log(wares[0].itemId);
+    io.emit("updateCart", { wares : wares });
   });
+
+
 });
+
+app.use(userAPI);
+app.use(catalogAPI);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('../client/public/index.html'));
   });
+
 
 
 

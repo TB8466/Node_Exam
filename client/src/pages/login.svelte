@@ -36,10 +36,9 @@
 		result = await res.json();        
 
         if(result){
-            console.log(username);
-            
-            
+            login(username);
             alert("Login success");
+            location.reload();
         }
         if(!result){
             alert("Wrong username/password");
@@ -80,8 +79,6 @@
 
 
 
-    
-
     let tæst;
 
     socket.on("thisTest", ({ data, test}) => {
@@ -108,7 +105,6 @@
             <button type="button" on:click={signIn}>Sign-in</button>
             <button on:click={createUserOverlay}>No account? Click here to create new account</button>
         </div>
-        <button on:click={()=>login(username)}>Pls work</button>
 
         <div bind:this={overlay} class="hidden">
             <div id="create-user">

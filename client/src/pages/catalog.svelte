@@ -1,6 +1,9 @@
 <script>
     import Footer from "../components/footer.svelte";
     import Header from "../components/header.svelte";
+    import io from "socket.io-client";
+
+    const socket = io();
 
     async function getCatalog(){
         const arr = [];
@@ -30,9 +33,25 @@
         }
         
     }
+    let count;
+    socket.on("updateCart", ({ wares }) => {
+        console.log(typeof wares, wares);
+        console.log();
+        div.innerText = wares[0].itemId;
+    });
+    function updateCount(value){
+        socket.emit("countUpdated",{ data : count+value});
+    };
+    let div;
+    socket.on("updateCount", ({ data }) => {
+        count = data;
+    });
+    function updateCart(id){
+        let amount = document.getElementById(id+"count").value;
         
+        socket.emit("cartUpdated", { id : id, amount : amount });
+    };
     
-    let active = false;
 </script>
 
 <main>
@@ -42,17 +61,25 @@
             <h1>loading...</h1>
             {:then items}
             <ul bind:this={ul}>
-                {#each items as item}
-                    
+                {#each items as item}                  
                         <li on:click={() => mouseOver(ul,item.id)} on:mouseleave={()=>mouseOut(ul,item.id)} class="item{item.id}">
                             {item.name}
                             <p>{item.description}</p>
                             <p>Amount left:{item.amount}</p>
-                        </li>
-                    
+                            <div class="count">
+                                <input id="{item.id}count" type="number" min="0">
+                                <button on:click={() => updateCart(item.id)}>Add to cart</button>
+                            </div>
+                        </li>                 
                 {/each}
             </ul>
         {/await}        
+    </div>
+    <div bind:this={div} class="shopping-cart">
+        {count}
+    </div>
+    <div>
+        <button>To shopping cart</button>
     </div>
     <Footer></Footer>
 </main>
@@ -83,5 +110,12 @@
    }
    .hidden{
        opacity: 0;
+   }
+   .count{
+    display: flex;
+    
+   }
+   li:focus{
+    font-size: 50px;
    }
 </style>

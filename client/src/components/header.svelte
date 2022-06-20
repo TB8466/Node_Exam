@@ -1,14 +1,19 @@
 <script>
     import io from "socket.io-client";
+    import { onMount } from "svelte";
+    let username;
 
-    let displayedUsername;
+    const socket = io();
 
-    /* const socket = io();
-
-    socket.on("login", ({ username }) => {
+    /* socket.on("login", ({ username }) => {
         displayedUsername = username;
-    }); */
-
+    });
+    console.log(displayedUsername); */
+    onMount(async () => {
+		const response = await fetch("http://localhost:3000/api/user");
+		const { data } = await response.json();
+		username = data;
+	});	
 </script>
 
 <header>
@@ -17,7 +22,8 @@
         <a href="/catalog">Catalog</a>
         <a href="/login">Login</a>
     </nav>
-    <h2>{displayedUsername || "Not logged in"}</h2>
+    <h2>{username || "Not logged in"}</h2>
+    
 </header>
 
 <style>
