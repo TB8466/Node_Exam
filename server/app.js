@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import userAPI from "./routers/user_API.js";
-import catalogAPI from "./routers/catalog_API.js";
+import catalogAPI from "./routers/employee_API.js";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -40,24 +40,13 @@ io.on("connection", (socket) => {
 
 
 io.on("connection", (socket) => {
-  const cart = {
-    itemId : "",
-    amount : 0
-  }
-  const wares = [];
-  socket.on("cartUpdated", ({ id, amount }) => {
-    if(wares[0].itemId === id){
-      console.log("if activated");
-      wares.findIndex(id).amount + 1;
-    }
-    else{
-    cart.itemId = id;
-    cart.amount = amount;
-    wares.push(cart);
-    }
-    console.log(wares);
-    console.log(wares[0].itemId);
-    io.emit("updateCart", { wares : wares });
+  const shoppingList = [];
+  socket.on("cartUpdated", ({ cart }) => {
+    shoppingList.push(cart);
+    session.shoppingList = shoppingList;
+    console.log(session.shoppingList);
+
+    io.emit("updateCart", { cart });
   });
 
 

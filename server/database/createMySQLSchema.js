@@ -13,14 +13,16 @@ db.query(`
     )
 `)
 db.query(`
-    DROP TABLE IF EXISTS catalog;
+    DROP TABLE IF EXISTS employees;
 `)
 db.query(`
-    CREATE TABLE catalog(
+    CREATE TABLE employees(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(50),
-        description VARCHAR(200),
-        amount INT
+        age INT,
+        position VARCHAR(200),
+        wage INT,
+        isCheckedIn BOOLEAN NOT NULL DEFAULT 0
     )
 `)
 

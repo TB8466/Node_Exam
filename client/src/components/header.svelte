@@ -19,7 +19,7 @@
 <header>
     <nav>
         <a href="/">Home</a>
-        <a href="/catalog">Catalog</a>
+        <a href="/employee">Employee</a>
         <a href="/login">Login</a>
     </nav>
     <h2>{username || "Not logged in"}</h2>

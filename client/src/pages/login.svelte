@@ -3,6 +3,7 @@
     import Header from "../components/header.svelte";
     import io from "socket.io-client";
 
+    let mainContent;
     let overlay;
 
     let email;
@@ -49,11 +50,11 @@
 	};
 
     function createUserOverlay(){
-        body.setAttribute("class","blur");
+        mainContent.setAttribute("class","blur");
         overlay.classList.remove("hidden")
     }
     function hideOverlay(){
-        body.classList.remove("blur");
+        mainContent.classList.remove("blur");
         overlay.classList.add("hidden");
     }
 
@@ -95,17 +96,17 @@
     <h1>Login Screen:</h1>
     <h2>Test: {tæst}</h2>
         <input on:input={thisTest} type="text">
-
-        <div id="login">
-            <h1>Login</h1>
-            <label for="username">Username:</label>
-            <input required id="username" type="text" bind:value={username}>
-            <label for="password">Password:</label>
-            <input required id="password" type="password" bind:value={password}>
-            <button type="button" on:click={signIn}>Sign-in</button>
-            <button on:click={createUserOverlay}>No account? Click here to create new account</button>
+        <div bind:this={mainContent} id="main-content">
+            <div id="login">
+                <h1>Login</h1>
+                <label for="username">Username:</label>
+                <input required id="username" type="text" bind:value={username}>
+                <label for="password">Password:</label>
+                <input required id="password" type="password" bind:value={password}>
+                <button type="button" on:click={signIn}>Sign-in</button>
+                <button on:click={createUserOverlay}>No account? Click here to create new account</button>
+            </div>
         </div>
-
         <div bind:this={overlay} class="hidden">
             <div id="create-user">
                 <span class="close" on:click={hideOverlay}>&times</span>
