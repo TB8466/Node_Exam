@@ -172,7 +172,6 @@
 </script>
 
 <main>
-    <button on:click={()=>test()}></button>
     <Header></Header>
     <a href="/newEmployee">Create New Employee</a>
     <div bind:this={mainContent} class="employees">
@@ -183,14 +182,18 @@
                 {#each items as item}                  
                         <li on:click={() => mouseOver(ul,item.id)} on:mouseleave={()=>mouseOut(ul,item.id)} class="item{item.id}">
                             {#if item.isCheckedIn===1}
-                                <input class="is-checked" id="CB-{item.id}" type="checkbox" on:change={() => checkEmployee(item.id,ul)} checked>
+                                <p>Check In
+                                    <input class="is-checked" id="CB-{item.id}" type="checkbox" on:change={() => checkEmployee(item.id,ul)} checked>
+                                </p>
                             {:else}
-                                <input id="CB-{item.id}" type="checkbox" on:change={() => checkEmployee(item.id,ul)}>
+                                <p>Check In
+                                    <input id="CB-{item.id}" type="checkbox" on:change={() => checkEmployee(item.id,ul)}>
+                                </p>
                             {/if}
                             {item.name}
                             <p>Position: {item.position}</p>
                             <p>Age: {item.age}</p>
-                            <p>Monthly Wage: {item.wage}</p>
+                            <p>Monthly Wage: {item.wage} U$D</p>
                             <button on:click={() => editEmployee(item.id)}>Edit</button>
                             <button on:click={() => deleteEmployee(item.id)}>Delete</button>
                         </li>                 
@@ -219,6 +222,7 @@
         border: solid black;
         padding: 25px;
         margin: 10px;
+        background-color: aliceblue;
    }
    .active{
        transition: 1s;
