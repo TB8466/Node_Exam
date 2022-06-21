@@ -5,25 +5,26 @@
 
     const socket = io();
 
-    /* socket.on("login", ({ username }) => {
-        displayedUsername = username;
-    });
-    console.log(displayedUsername); */
     onMount(async () => {
 		const response = await fetch("http://localhost:3000/api/user");
 		const { data } = await response.json();
 		username = data;
-	});	
+	});
+    async function logout(){
+        console.log("logout");
+        await fetch("http://localhost:3000/api/logout");
+		location.href = "/";
+    }
 </script>
 
 <header>
     <nav>
-        <a href="/">Home</a>
-        <a href="/employee">Employee</a>
-        <a href="/login">Login</a>
+        <span><a href="/"><img src="img/Logo.png" alt="Logo"></a></span>
+        <span><a href="/employee">Employees</a></span>
+        <span><a href="/email">Email</a></span>
     </nav>
     <h2>{username || "Not logged in"}</h2>
-    
+    <button on:click={() => logout()}>Logout</button>
 </header>
 
 <style>
@@ -33,5 +34,22 @@
     h2{
         position: relative;
         left: 90%;
+    }
+    span+span{
+        margin-left: 50px;
+    }
+    span{
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+        font-family: "Arial";
+    }
+    nav{
+        display: inline-block;
+    }
+    img{
+        height: 80px;
+        width: 100px;
+        
     }
 </style>

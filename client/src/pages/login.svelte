@@ -92,7 +92,6 @@
 </script>
 
 <main>
-    <Header></Header>
     <h1>Login Screen:</h1>
     <h2>Test: {tæst}</h2>
         <input on:input={thisTest} type="text">

@@ -22,7 +22,8 @@ db.query(`
         age INT,
         position VARCHAR(200),
         wage INT,
-        isCheckedIn BOOLEAN NOT NULL DEFAULT 0
+        isCheckedIn BOOLEAN NOT NULL DEFAULT 0,
+        email VARCHAR(75)
     )
 `)
 

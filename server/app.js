@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import userAPI from "./routers/user_API.js";
 import catalogAPI from "./routers/employee_API.js";
+import emailAPI from "./routers/email_API.js";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -54,6 +55,7 @@ io.on("connection", (socket) => {
 
 app.use(userAPI);
 app.use(catalogAPI);
+app.use(emailAPI);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('../client/public/index.html'));

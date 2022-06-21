@@ -7,6 +7,11 @@ const router = Router();
 router.get("/api/user", (req, res) => {
     res.send({ data: req.session.username });
 });
+
+router.get("/api/logout", (req, res) => {
+    req.session.username = undefined;
+    res.redirect("/");
+});
 /* router.get("/api/user", (req, res) => {
 
     db.query("SELECT * FROM users", (error, result) =>{
