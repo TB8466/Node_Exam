@@ -43,7 +43,8 @@
 
 <main>
     <Header></Header>
-    {#await getBulletin()}
+    <div class="bulletin-container">
+        {#await getBulletin()}
             <h1>loading...</h1>
             {:then items}         
                 {#each items as item}
@@ -52,7 +53,7 @@
                         <label for="headline">Headline:</label>
                         <input class="message" bind:this={headline} name="headline" type="text" value={item.headline}>
                         <label for="message">Message:</label>
-                        <textarea class="message" bind:this={message} name="message" value={item.message}></textarea>
+                        <textarea rows="15" class="message" bind:this={message} name="message" value={item.message}></textarea>
                     </div>
                     <div class="container">
                         <label for="budget">Today's budget in US $:</label>
@@ -61,15 +62,28 @@
                     <button on:click={editBulletin}>Change</button>
                 {/each}    
         {/await}
+    </div>
     <Footer></Footer>
 </main>
 
 <style>
     .container{
         border: solid;
-        width: fit-content;
+        width: 500px;
+        margin: 20px;
+        background-color: aliceblue;
+    }
+    textarea {
+        width: 100px;
     }
     .message{
         width: 70%;
+    }
+    .bulletin-container{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
     }
 </style>
