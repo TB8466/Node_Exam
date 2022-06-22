@@ -6,6 +6,7 @@
 	import NewEmployee from "./pages/newEmployee.svelte";
 	import { onMount } from "svelte";
 	import Email from "./pages/email.svelte";
+	import Bulletin from "./pages/bulletin.svelte";
 
 	let username = false;
 
@@ -35,6 +36,10 @@
 
 		<Route path="/email">
 			<Email></Email>
+		</Route>
+
+		<Route path="/bulletin">
+			<Bulletin></Bulletin>
 		</Route>
 	{:else}
 		<Login></Login>

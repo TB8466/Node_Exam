@@ -8,12 +8,7 @@ const connection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 })
-/* const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "smartmarket"
-}) */
+
 connection.connect();
 
 console.log(connection);

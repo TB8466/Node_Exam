@@ -22,27 +22,42 @@
 
 <main>
     <Header></Header>
-    <form method="POST" action="api/email">
-        <label for="to">To:</label>
-        <select bind:this={dropDown} name="to"><option>None selected</option></select>
-        <label for="subject">Subject:</label>
-        <input name="subject" type="text">
-        
-        <label for="message">Message:</label>
-        <input name="message" type="text">
+    <div class="email-content">
+        <h2>Send email to employee:</h2>
+        <form method="POST" action="api/email">
+            <label for="to">To:</label>
+            <select bind:this={dropDown} name="to"><option>None selected</option></select>
+            <label for="subject">Subject:</label>
+            <input name="subject" type="text">
+            
+            <label for="message">Message:</label>
+            <input name="message" type="text">
 
-        <label for="name">From:</label>
-        <input name="name" type="text">
-        <label for="company">Company:</label>
-        <input name="company" type="text">
-        <label for="phone">Phonenumber:</label>
-        <input name="phone" type="text">
+            <label for="name">From:</label>
+            <input name="name" type="text">
+            <label for="department">Department:</label>
+            <input name="department" type="text">
+            <label for="phone">Phonenumber:</label>
+            <input name="phone" type="text">
 
-        <input type="submit" value="Send">
-    </form>
+            <input type="submit" value="Send">
+        </form>
+    </div>
     <Footer></Footer>
 </main>
 
 <style>
-   
+   .email-content{
+        background-color: antiquewhite;
+        padding: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: solid black;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+   }
+   label{
+       font-weight: bold;
+   }
 </style>

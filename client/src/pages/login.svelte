@@ -1,12 +1,10 @@
 <script>
     import Footer from "../components/footer.svelte";
-    import Header from "../components/header.svelte";
     import io from "socket.io-client";
 
     let mainContent;
     let overlay;
 
-    let email;
     let username;
     let password;
 
@@ -21,6 +19,11 @@
     function login(name){
         socket.emit("loggedIn", {username : name})
     }
+    socket.on("login", ({ username }) => {
+        
+        alert("Welcome "+username);
+        location.reload();
+    })
 
 
     async function signIn(){
@@ -38,8 +41,6 @@
 
         if(result){
             login(username);
-            alert("Login success");
-            location.reload();
         }
         if(!result){
             alert("Wrong username/password");
@@ -72,38 +73,26 @@
 		});
 		const json = await res.json()
 		result = JSON.stringify(json)
-        console.log(result);
 
         alert("User created")
         hideOverlay();
     }
-
-
-
-    let tæst;
-
-    socket.on("thisTest", ({ data, test}) => {
-        tæst = data;
-    })
-
-    function thisTest(event){
-        socket.emit("testThis",{data:event.target.value})
-    }
 </script>
 
 <main>
-    <h1>Login Screen:</h1>
-    <h2>Test: {tæst}</h2>
-        <input on:input={thisTest} type="text">
+    
         <div bind:this={mainContent} id="main-content">
             <div id="login">
-                <h1>Login</h1>
+                <h1>Welcome to superportal</h1>
+                <h2>Login or sign-up:</h2>
                 <label for="username">Username:</label>
                 <input required id="username" type="text" bind:value={username}>
                 <label for="password">Password:</label>
                 <input required id="password" type="password" bind:value={password}>
-                <button type="button" on:click={signIn}>Sign-in</button>
-                <button on:click={createUserOverlay}>No account? Click here to create new account</button>
+                <ul>
+                    <li><button type="button" on:click={signIn}>Sign-in</button></li>
+                    <li><button on:click={createUserOverlay}>No account? Click here to create new account</button></li>
+                </ul>
             </div>
         </div>
         <div bind:this={overlay} class="hidden">
@@ -132,7 +121,7 @@
             display: none;
             
         }
-        #create-user{
+        #create-user, #login{
             position: absolute;
             top: 50%;
             left: 50%;

@@ -21,3 +21,11 @@ CREATE TABLE employees(
         isCheckedIn BOOLEAN NOT NULL DEFAULT 0,
         email VARCHAR(75)
     );
+#Bulletin
+DROP TABLE IF EXISTS bulletin;
+CREATE TABLE bulletin(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    headline VARCHAR(50),
+    message VARCHAR(500),
+    budget INT
+)

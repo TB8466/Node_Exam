@@ -3,6 +3,7 @@ import path from "path";
 import userAPI from "./routers/user_API.js";
 import catalogAPI from "./routers/employee_API.js";
 import emailAPI from "./routers/email_API.js";
+import bulletinAPI from "./routers/bulletin_API.js";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -32,30 +33,15 @@ const wrap = middleware => (socket, next) => middleware(socket.request, {}, next
 io.use(wrap(sessionMiddleware));
 
 io.on("connection", (socket) => {
-
-  socket.on("testThis", ({ data }) => {
-    console.log("app socket ON");
-    io.emit("thisTest", { data });
+  socket.on("loggedIn", ({ username }) => {
+    io.emit("login", { username });
   });
-});
-
-
-io.on("connection", (socket) => {
-  const shoppingList = [];
-  socket.on("cartUpdated", ({ cart }) => {
-    shoppingList.push(cart);
-    session.shoppingList = shoppingList;
-    console.log(session.shoppingList);
-
-    io.emit("updateCart", { cart });
-  });
-
-
 });
 
 app.use(userAPI);
 app.use(catalogAPI);
 app.use(emailAPI);
+app.use(bulletinAPI);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('../client/public/index.html'));

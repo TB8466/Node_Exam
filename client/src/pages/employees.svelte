@@ -13,7 +13,6 @@
             data.forEach((element) => {
                 arr.push(element);
             })
-            console.log(arr);
         })
         return arr;
     };
@@ -27,7 +26,6 @@
                 arr.push(element);
             })
         })
-        console.log(arr);
         editEmp.classList.remove("hidden");
         mainContent.classList.add("blur");
 
@@ -35,21 +33,29 @@
         const inpAgeLabel = document.createElement("p");
         const inpPositionLabel = document.createElement("p");
         const inpWageLabel = document.createElement("p"); 
+        const inpEmailLabel = document.createElement("p"); 
 
         const inpName = document.createElement("input");
+        
         const inpAge = document.createElement("input");
+        inpAge.setAttribute("type","number");
         const inpPosition = document.createElement("input");
         const inpWage = document.createElement("input");
+        inpWage.setAttribute("type","number");
+        const inpEmail = document.createElement("input");
+        inpEmail.setAttribute("type","email");
         
         inpNameLabel.innerText = "Name: ";
         inpAgeLabel.innerText = "Age: ";
         inpPositionLabel.innerText = "Position: ";
         inpWageLabel.innerText = "Wage: ";
+        inpEmailLabel.innerText = "Email: ";
         
         inpName.value = arr[0].name;
         inpAge.value= arr[0].age;
         inpPosition.value = arr[0].position;
         inpWage.value = arr[0].wage;
+        inpEmail.value = arr[0].email;
 
         const exit = document.createElement("p");
         exit.innerText = "X";
@@ -62,7 +68,7 @@
         const submit = document.createElement("button");
         submit.innerText = "Submit";
         submit.onclick = function(){
-            editEmpAPI(id,inpName.value,inpAge.value,inpPosition.value,inpWage.value);
+            editEmpAPI(id,inpName.value,inpAge.value,inpPosition.value,inpWage.value, inpEmail.value);
         }
 
         editEmp.appendChild(exit);
@@ -74,10 +80,12 @@
         editEmp.appendChild(inpPosition);
         editEmp.appendChild(inpWageLabel);
         editEmp.appendChild(inpWage);
+        editEmp.appendChild(inpEmailLabel);
+        editEmp.appendChild(inpEmail);
         editEmp.appendChild(submit);
     }
 
-    async function editEmpAPI(id, name, age, position, wage){
+    async function editEmpAPI(id, name, age, position, wage, email){
         age = Number(age);
         wage = Number(wage);
         const res = await fetch("http://localhost:3000/api/employee", {
@@ -91,12 +99,13 @@
                 name,
                 age,
                 position,
-                wage
+                wage,
+                email
 			})
 		});
 		const json = await res.json();
 
-        alert("User Edited");
+        alert("Employee Edited");
         location.reload();
     }
 
@@ -124,7 +133,6 @@
         
         let isCheckedIn;
         const CB = document.getElementById("CB-"+id).checked;
-        console.log("checkIn?",CB,"Id",id);
         if(CB){
             isCheckedIn = 1;
             for(let j = 0; j<i.children.length; j++){
@@ -168,7 +176,6 @@
             }
         }
     }
-    editEmployee(4)
 </script>
 
 <main>
@@ -179,7 +186,7 @@
             <h1>loading...</h1>
             {:then items}
             <ul bind:this={ul}>
-                {#each items as item}                  
+                {#each items as item}
                         <li on:click={() => mouseOver(ul,item.id)} on:mouseleave={()=>mouseOut(ul,item.id)} class="item{item.id}">
                             {#if item.isCheckedIn===1}
                                 <p>Check In
@@ -193,7 +200,7 @@
                             {item.name}
                             <p>Position: {item.position}</p>
                             <p>Age: {item.age}</p>
-                            <p>Monthly Wage: {item.wage} U$D</p>
+                            <p>Monthly Wage: {item.wage} US $</p>
                             <button on:click={() => editEmployee(item.id)}>Edit</button>
                             <button on:click={() => deleteEmployee(item.id)}>Delete</button>
                         </li>                 
@@ -201,7 +208,7 @@
             </ul>
         {/await}        
     </div>
-    <div bind:this={editEmp} class="edit-emp ">
+    <div bind:this={editEmp} class="edit-emp hidden">
 
     </div>
     

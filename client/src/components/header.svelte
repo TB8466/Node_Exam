@@ -11,7 +11,6 @@
 		username = data;
 	});
     async function logout(){
-        console.log("logout");
         await fetch("http://localhost:3000/api/logout");
 		location.href = "/";
     }
@@ -22,6 +21,7 @@
         <span><a href="/"><img src="img/Logo.png" alt="Logo"></a></span>
         <span><a href="/employee"><h4>Employees</h4></a></span>
         <span><a href="/email"><h3>Email</h3></a></span>
+        <span><a href="/bulletin"><h3>Bulletin</h3></a></span>
         <h2>{username || "Not logged in"}
             <button on:click={() => logout()}>Logout</button>
         </h2>
@@ -32,6 +32,7 @@
 
 <style>
     header{
+        background-color: #92d9f0;
         border: solid black;
     }
     h2{

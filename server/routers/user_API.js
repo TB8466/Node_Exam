@@ -12,13 +12,6 @@ router.get("/api/logout", (req, res) => {
     req.session.username = undefined;
     res.redirect("/");
 });
-/* router.get("/api/user", (req, res) => {
-
-    db.query("SELECT * FROM users", (error, result) =>{
-        if (error) throw error;
-        res.send(result);
-    });
-}); */
 
 router.post("/api/user", async (req, res) => {
     const VALUES = [
@@ -45,7 +38,6 @@ router.post("/api/user/login", async (req, res) => {
                 if(error)throw error;
                 if(await passwordHandler.decrypt(req.body.password,String(result[0].password))){
                     req.session.username = req.body.username;
-                    console.log("From post",req.session.username);
                     res.send(true);
                 }
                 else{
@@ -60,8 +52,6 @@ router.post("/api/user/login", async (req, res) => {
 });
 
 router.get("/profile", (req,res) =>{
-    console.log(req.session);
-    console.log("Username:",req.session.username);
     if (req.session.username){
         res.send({msg : "Welcome"});
     }
