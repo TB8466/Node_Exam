@@ -55,7 +55,7 @@
                         <textarea class="message" bind:this={message} name="message" value={item.message}></textarea>
                     </div>
                     <div class="container">
-                        <label for="budget">Today's budget:</label>
+                        <label for="budget">Today's budget in US $:</label>
                         <input bind:this={budget} name="budget" type="number" value={item.budget}>
                     </div>
                     <button on:click={editBulletin}>Change</button>

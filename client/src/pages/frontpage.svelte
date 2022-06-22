@@ -39,7 +39,7 @@
                     
                     <div class="message">
                         <h2>Today's expected budget:</h2>
-                        <h3>{item.budget} USD $</h3>
+                        <h3>{item.budget} US $</h3>
                     </div>                                                        
                 {/each}
             
