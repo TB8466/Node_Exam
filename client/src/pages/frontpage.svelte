@@ -48,10 +48,14 @@
 </main>
 
 <style>
-.message{
-    border: solid;
-    width: 50%;
-}
+    h1{
+        margin: 15px;
+    }
+    .message{
+        border: solid;
+        width: 50%;
+        margin: 15px;
+    }
 
 
 </style>

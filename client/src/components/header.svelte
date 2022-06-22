@@ -21,7 +21,7 @@
         <span><a href="/"><img src="img/Logo.png" alt="Logo"></a></span>
         <span><a href="/employee"><h4>Employees</h4></a></span>
         <span><a href="/email"><h3>Email</h3></a></span>
-        <span><a href="/bulletin"><h3>Bulletin</h3></a></span>
+        <span><a href="/bulletin"><h3>Bulletins</h3></a></span>
         <h2>{username || "Not logged in"}
             <button on:click={() => logout()}>Logout</button>
         </h2>

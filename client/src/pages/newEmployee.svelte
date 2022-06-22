@@ -24,7 +24,8 @@
 		});
 		const json = await res.json()
         
-        alert("Employee created")
+        alert("Employee created");
+        location.href="/employee";
     }
     
 </script>
