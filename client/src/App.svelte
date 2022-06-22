@@ -1,5 +1,5 @@
 <script>
-	import {Router, Route, Link} from "svelte-navigator"
+	import { Router, Route, Link } from "svelte-navigator"
 	import Employee from "./pages/employees.svelte";
 	import Frontpage from "./pages/frontpage.svelte";
 	import Login from "./pages/login.svelte";

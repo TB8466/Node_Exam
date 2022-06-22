@@ -168,7 +168,7 @@
             }
         }
     }
-    
+    editEmployee(4)
 </script>
 
 <main>
@@ -201,7 +201,7 @@
             </ul>
         {/await}        
     </div>
-    <div bind:this={editEmp} class="edit-emp hidden">
+    <div bind:this={editEmp} class="edit-emp ">
 
     </div>
     
@@ -233,13 +233,22 @@
        z-index: 1;
    }
    .edit-emp{
+        padding: 15px;
         position: absolute;
         top: 50%;
         left: 50%;
         border: solid black;
         transform: translate(-50%, -50%);
         z-index: 2;
+        background-color: aliceblue;
    }
+   .edit-emp p{
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        padding: 2px;
+   }
+
    .hidden{
        opacity: 0;
        z-index: -1;
